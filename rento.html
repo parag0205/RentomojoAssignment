@@ -1,0 +1,319 @@
+<?php $logerr='';
+$login=''; 
+$inserr=''; 
+session_start();
+if($_SESSION['name']=='')
+{
+	$login="First you have login by your credential";
+}
+else
+{
+$conn=mysqli_connect('localhost','root','','school');
+if(!$conn)
+{
+	die("connection failed");
+}
+else
+{
+	if (isset($_POST['submit'])) 
+	{ 
+        $name=$_POST['name'];
+		$father=$_POST['fathername'];
+		$dob=$_POST['dob'];
+		$gender=$_POST['gender'];
+		$phone=$_POST['phone'];
+		$admissiondate=$_POST['admissiondate'];
+		$address=$_POST['address'];
+		$sql="INSERT INTO studentinfo(fullname,fathername,dob,gender,phone,admissiondate,address)VALUES('$name','$father','$dob','$gender','$phone','$admissiondate','$address');";
+                    if(mysqli_multi_query($conn,$sql)===TRUE)
+                       {
+                            $logerr="Details inserted successfully in database";
+                       }
+                       else
+                       {
+                        $inserr="Some error occured".$conn->error;
+                       }
+	}			
+}
+}
+mysqli_close($conn);?>
+ <!DOCTYPE html>
+ <html>
+ <head>
+ 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<title>Registrations</title>
+ 	<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+ 		<link rel="stylesheet" href="animate.css">
+ 		<style type="text/css">
+ 		body
+ 		{
+ 			background-image: url(dubai.jpg);
+ 		}
+ 		.container
+		{
+			max-width: 120rem;
+			width: 90%;
+			
+		}
+
+ 		
+		.slideInLeft {
+  		animation-duration: 3s;
+  		animation-delay: .1s;
+ 		}
+
+ 		.flex-container{
+	animation-duration: 2s;
+ 	animation-delay: .2s;
+	width: 1000px;
+	margin-top: 70px;
+	min-height: 600px;
+	margin-left: 200px;
+	display: -webkit-flex; /* Safari */		
+	display: flex; /* Standard syntax */
+
+}
+.flex-container .column
+{
+
+	padding: 10px;
+	background: linear-gradient(to bottom right, #0cb083,#19ef83);
+	-webkit-flex: 1; /* Safari */
+	-ms-flex: 1; /* IE 10 */
+	flex: 1; /* Standard syntax */
+}
+.flex-container .column.bg-alt
+{
+	background: rgba(0,0,0,0.6);;
+}
+
+
+.pet{
+	color: white;
+	font-size: 40px;
+	font-family: 'Abel', sans-serif;
+	margin-top: 160px;
+	margin-left: 40px;
+}
+.test
+{
+			color: white;
+ 			font-size: 16px;
+ 			margin-left: 130px;	
+ 			font-family: 'Abel', sans-serif;
+}
+.heading
+{
+	margin-left: 50px;
+	color: white;
+	font-family: 'Abel', sans-serif;
+}
+.box
+{
+	position: absolute;
+}
+.box.inputBox
+{
+	position: relative;
+}
+.box .inputBox input
+{
+	padding-right: 100px;
+	padding: 6px 30px;
+	margin-bottom: 30px;
+	font-size: 16px;
+	margin-left: 50px;
+	color: white;
+	font-family: 'Abel',sans-serif;
+	border: none;
+	letter-spacing: 1px;
+	outline: none;
+	background: transparent;
+	border-bottom: 1px solid #fff;
+	
+}
+.box .inputBox label
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 10px 0;
+	font-size: 16px;
+	color: #fff;
+	letter-spacing: 1px;
+	pointer-events: none;
+	transition: .5s;
+	font-family: 'Abel', sans-serif;
+
+}
+.box .inputBox input:focus ~ label,
+.box .inputBox input:valid ~ label
+{
+
+	right: 10px;
+	top: 2px;
+	
+	color: #0cb083;
+	font-size: 12px;
+	font-family: 'Abel', sans-serif;
+}
+.new
+{
+	margin-left: 50px;
+	margin-top: 20px;
+	animation-delay: 1s;
+	text-transform: uppercase;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: white;
+	background: #0cb083;
+	padding: 10px 20px;
+	cursor: pointer;
+
+}
+.new:hover
+{
+	color: #0cb083;
+	background: #fff;
+	transition: .8s;
+
+}
+ 
+.new2
+{	
+	animation-delay: 1s;
+	
+	margin-left: 40px;
+	text-transform: uppercase;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: white;
+	background: crimson;
+	padding: 10px 20px;
+	cursor: pointer;
+
+
+}
+.new2:hover
+{
+	background: white;
+	color: crimson;
+	transition: .8s;
+
+}
+.new3
+{	
+	animation-delay: 1s;
+	
+	margin-left: 40px;
+	text-transform: uppercase;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: white;
+	background: crimson;
+	padding: 10px 20px;
+	cursor: pointer;
+
+
+}
+.new3:hover
+{
+	background: white;
+	color: crimson;
+	transition: .8s;
+
+}
+.err
+{
+	margin-top: 80px;
+	color: black;
+	font-size: 18px;
+	font-weight: bold;
+}
+.err1
+{
+	color: red;
+	font-weight: bold;
+	font-size: 18px;
+	font-family: 'Abel',sans-serif;
+}
+
+ 		</style>
+
+
+
+ </head>
+ <body>
+
+ <div class="flex-container animated zoomIn">
+        <div class="column">
+        	<h1 class="pet animated slideInLeft">Welcome<span><?php echo $login; ?></span> <?php echo $_SESSION['name'];  ?></h1>
+        	
+	<p class="test animated slideInLeft">To stay connected with us please <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsplogin with your personal id
+ <br><br><br> <br><br><br><br>
+<span class="err"><?php echo "$logerr"; ?></span><span class="err1"><?php echo "$inserr"; ?></span>
+	</p> <br><br>
+
+        </div>
+        <div class="column bg-alt">
+        	<div class="box">
+        		<h2 class="heading animated slideInRight">Register Your Details</h2>
+        			<form method="post">
+        				<div class="inputBox animated slideInRight">
+        					<input type="text" name="name" required="" >
+        					<label>Full Name</label>
+
+        				</div>	
+
+        				<div class="inputBox animated slideInRight">
+        					<input type="text" name="fathername" required="">
+        					<label>Father's Name</label>
+
+        				</div>
+
+        				<div class="inputBox animated slideInRight">
+        					&nbsp&nbsp&nbsp&nbsp&nbsp<input type="date" name="dob" required="">
+        					<label>Date of birth</label>
+
+        				</div>
+
+        				<div class="inputBox animated slideInRight">
+        					<input type="text" name="gender" required="">
+        					<label>Gender</label>
+
+        				</div>
+
+        				<div class="inputBox animated slideInRight">
+        					<input type="text" name="phone" required="">
+        					<label>Phone No</label>
+
+        				</div>
+
+        				<div class="inputBox animated slideInRight">
+        					<input type="date" name="admissiondate" required="">
+        					<label>Admission Date</label>
+
+        				</div>
+
+        				<div class="inputBox animated slideInRight">
+        					<input type="text" name="address" required="">
+        					<label>Address</label>
+
+        				</div>
+
+        				<input type="submit" name="submit" value="Submit" class="new animated flipInX"> 
+        				
+        				<button  type="button" class="new3 animated flipInX" onclick="location.href='details.php'">Show Details</button>
+
+        				<button  type="button" class="new2 animated flipInX" onclick="location.href='login.php'">Log Out</button>
+        				<button  type="button" class="new2 animated flipInX" onclick="location.href='announcement.php'">Upload</button>
+        				
+        			</form>
+        	</div>     	
+    </div>
+  </body>
+ </html>
